@@ -3,25 +3,36 @@
 from typing import Optional, List
 
 class Solution:
-    def twoSum(self, nums: List[int], target: int) -> List[int]:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+
+        if len(s) < 2:
+            return len(s)
         
-        ourdict = {}
+        leftptr = 0
+        rightptr = 1
 
-        for i in range(len(nums)):
+        ourdict = {s[leftptr]: leftptr}
+        currentlen = 1
+        maxlen = currentlen
 
-            desired = target - nums[i]
-
-            if desired in ourdict:
-
-                return [i, ourdict[desired]]
-            
+        while rightptr < len(s):
+            char = s[rightptr]
+            if char in ourdict and ourdict[char] >= leftptr:
+                currentlen -= ourdict[char] - leftptr
+                leftptr = ourdict[char] + 1
             else:
+                currentlen += 1
 
-                ourdict[nums[i]] = i
+            maxlen = max(currentlen, maxlen)
             
-        return list()
+            ourdict[char] = rightptr
+            
+            rightptr += 1
+
+        return maxlen
+        
     
-what = Solution().twoSum(nums=[-1,-2,-3,-4,-5], target=-8)
+what = Solution().lengthOfLongestSubstring(s="abcacdba")
 
 
 what
